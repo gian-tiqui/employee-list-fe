@@ -1,0 +1,7 @@
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.exe
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\appsettings.json
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.dll
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.deps.json
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.runtimeconfig.json
+D:\Kianna\Programming\EDP\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.pdb

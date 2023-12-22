@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card col-sm-5 shadow p-3 mt-5 mx-auto">
+    <div class="card-title text-center fw-bold fs-4">Sign Up</div>
+    <div class="card-body>">
+        <form id="sign_up" action="" method="post">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="pin" class="form-label">Pin</label>
+                <input type="password" class="form-control" id="pin" required>
+            </div>
+            <div class="mb-3">
+                <label for="pin2" class="form-label">Confirm Pin</label>
+                <input type="password" class="form-control" id="pin2" required>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-dark">Sign up</button>
+            </div>
+            <div class="mt-1">
+                <p class="text-center">Already have an account? <a class="text-decoration-none" asp-controller="Home" asp-action="Login">Sign in here.</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#sign_up").on("submit", (event) => {
+            event.preventDefault();
+
+            if ($("#pin").val() !== $("#pin2").val()) {
+                alert("Pin does not match.");
+                return;
+            }
+
+            const data = {
+                email: $("#email").val(),
+                pin: $("#pin").val()
+            };
+            
+
+            $.ajax({
+                method: "POST",
+                url: "http://www.employeedata.com/scripts/controllers/users/register.php",
+                data: data,
+                success: (response) => {
+                    alert("Registration successful");
+                    window.location.href = "/Home/Login";
+                },
+                error: (err) => {
+                    console.log(err);
+                    alert("There was a problem in registering your account");
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card shadow p-3" style="height: 500px;">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="card-title fw-bold fs-4">Employee List</div>
+        </div>
+        <div class="col-sm-3" style="padding-left: 110px;">
+            <a class="btn btn-dark px-3 text-center" asp-controller="Home" asp-action="AddEmployee">Add Employee</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px;">
+            <table class="table align-middle table-hover table-light table-bordered table-striped" id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Address</th>
+                        <th>Contact No.</th>
+                        <th>Email Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function fetchEmployees() {
+                $.ajax({
+                    url: 'http://www.employeedata.com/scripts/controllers/employees/get_employees.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === 200) {
+                            displayEmployees(data.data);
+                        } else {
+                            console.error('Error fetching employees:', data.description);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                    }
+                });
+            }
+
+            function displayEmployees(employees) {
+                var tableBody = $('#employeeTable tbody');
+                tableBody.empty();
+
+                employees.forEach(function (employee, index) {
+                    var row = `<tr>
+                                                <td>${index + 1}</td>
+                                                <td>${employee.first_name}</td>
+                                                <td>${employee.middle_name}</td>
+                                                <td>${employee.last_name}</td>
+                                                <td>${employee.address}</td>
+                                                <td>${employee.contact_number}</td>
+                                                <td>${employee.email}</td>
+                                                <td>
+                                                    <button class="btn btn-primary px-3 editEmployee" data-id="${employee.eid}">Edit</button>
+                                                    <button class="btn btn-danger ms-2 px-3 deleteEmployee" data-id="${employee.eid}">Delete</button>
+                                                </td>
+                                            </tr>`;
+
+                    tableBody.append(row);
+                });
+
+                $('.editEmployee').on('click', function () {
+                    var employeeId = $(this).data('id');
+                    var selectedEmployee = employees.find(e => e.eid === employeeId);
+                    localStorage.setItem('editEmployeeData', JSON.stringify(selectedEmployee));
+                    window.location.href = '/Home/EditEmployee';
+                });
+            }
+
+            fetchEmployees();
+
+            $(document).on('click', '.deleteEmployee', function () {
+                var employeeId = $(this).data('id');
+
+                $.ajax({
+                    url: 'http://www.employeedata.com/scripts/controllers/employees/delete_employee.php',
+                    type: 'POST',
+                    data: { eid: employeeId },
+                    success: function (response) {
+                        const data = JSON.parse(response);
+                        if (data.status === 200) {
+                            console.log('Employee deleted successfully:', data.description);
+                            alert('Employee deleted successfully');
+                            fetchEmployees();
+                        } else {
+                            console.error('Error deleting employee:', data.description);
+                            alert('Error deleting employee: ' + data.description);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+}

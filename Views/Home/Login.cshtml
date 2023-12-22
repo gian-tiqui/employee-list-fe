@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card col-sm-5 shadow p-3 mt-5 mx-auto">
+    <div class="card-title text-center fw-bold fs-4">Login</div>
+    <div class="card-body>">
+        <form id="login" action="" method="post">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Pin</label>
+                <input type="password" class="form-control" id="pin">
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-dark">Sign in</button>
+            </div>
+            <div class="mt-1">
+                <p class="text-center">Don't have an account yet? <a class="text-decoration-none" asp-controller="Home" asp-action="SignUp">Sign up here.</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#login").on("submit", (event) => {
+            event.preventDefault();
+
+            const data = {
+                email: $("#email").val(),
+                pin: $("#pin").val()
+            };
+
+            $.ajax({
+                method: "POST",
+                url: "http://www.employeedata.com/scripts/controllers/users/login.php",
+                data: data,
+                success: (response) => {
+                    alert("Login successful");
+
+                    const user = JSON.stringify(JSON.parse(response).data);
+                    localStorage.setItem("user", user);
+                    window.location.href = "/";
+                },
+                error: (err) => {
+                    console.log(err);
+                    alert("There was a problem in logging in your account");
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,7 @@
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.exe
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\appsettings.json
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.dll
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.deps.json
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.runtimeconfig.json
+C:\Users\MyPC\projects\aspnet\EmployeeList\EmployeeList\obj\Release\net8.0\PubTmp\Out\EmployeeList.pdb

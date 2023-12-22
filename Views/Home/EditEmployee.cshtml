@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card p-3 shadow col-sm-6 mx-auto">
+    <div class="card-title text-center fs-5 fw-bold">Edit Employee</div>
+    <div class="card-body">
+
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3">
+                <label for="firstname" class="col-form-label">First Name</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" id="firstname" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3">
+                <label for="middlename" class="col-form-label">Middle Name</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" id="middlename" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3">
+                <label for="lastname" class="col-form-label">Last Name</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" id="lastname" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3">
+                <label for="address" class="col-form-label">Address</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" id="address" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3">
+                <label for="phone" class="col-form-label">Contact No.</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" id="phone" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3">
+                <label for="email" class="col-form-label">Email Address</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="email" id="email" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col d-grid gap-2">
+                <button class="btn btn-primary" id="updateEmployee">Submit</button>
+            </div>
+            <div class="col d-grid gap-2">
+                <a class="btn btn-danger ms-2" asp-controller="Home" asp-action="Employees">Cancel</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var employeeData = JSON.parse(localStorage.getItem('editEmployeeData'));
+
+            if (employeeData) {
+                $('#firstname').val(employeeData.first_name);
+                $('#middlename').val(employeeData.middle_name);
+                $('#lastname').val(employeeData.last_name);
+                $('#address').val(employeeData.address);
+                $('#phone').val(employeeData.contact_number);
+                $('#email').val(employeeData.email);
+            } else {
+                console.error('Employee data not found in localStorage');
+            }
+
+            $('#updateEmployee').on('click', function () {
+                var updatedData = {
+                    eid: employeeData.eid,
+                    first_name: $('#firstname').val(),
+                    middle_name: $('#middlename').val(),
+                    last_name: $('#lastname').val(),
+                    address: $('#address').val(),
+                    contact_number: $('#phone').val(),
+                    email: $('#email').val()
+                };
+
+                $.ajax({
+                    url: 'http://www.employeedata.com/scripts/controllers/employees/update_employee.php',
+                    type: 'POST',
+                    data: updatedData,
+                    success: function (response) {
+                        const data = JSON.parse(response);
+                        if (data.status === 200) {
+                            console.log('Employee updated successfully:', data.description);
+                            alert('Employee updated successfully');
+                            window.location.href = '/Home/Employees';
+                        } else {
+                            console.error('Error updating employee:', data.description);
+                            alert('Error updating employee: ' + data.description);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
